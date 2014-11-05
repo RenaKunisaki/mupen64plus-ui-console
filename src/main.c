@@ -22,9 +22,9 @@
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 /* This is the main application entry point for the console-only front-end
- * for Mupen64Plus v2.0. 
+ * for Mupen64Plus v2.0.
  */
- 
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -263,6 +263,7 @@ static void printUsage(const char *progname)
            "    --set (param-spec)    : set a configuration variable, format: ParamSection[ParamName]=Value\n"
            "    --core-compare-send   : use the Core Comparison debugging feature, in data sending mode\n"
            "    --core-compare-recv   : use the Core Comparison debugging feature, in data receiving mode\n"
+		   "    --lua (filepath)      : load specified Lua script at start\n"
            "    --nosaveoptions       : do not save the given command-line options in configuration file\n"
            "    --verbose             : print lots of information\n"
            "    --help                : see this help message\n\n"
@@ -558,6 +559,11 @@ static m64p_error ParseCommandLineFinal(int argc, const char **argv)
                 return M64ERR_INPUT_INVALID;
             i++;
         }
+		else if (strcmp(argv[i], "--lua") == 0 && ArgsLeft >= 1)
+		{
+			(*CoreDoCommand)(M64CMD_LOAD_SCRIPT, 0, (char*)argv[i+1]);
+			i++;
+		}
         else if (strcmp(argv[i], "--core-compare-send") == 0)
         {
             l_CoreCompareMode = 1;
@@ -599,7 +605,7 @@ int main(int argc, char *argv[])
 {
     int i;
 
-    printf(" __  __                         __   _  _   ____  _             \n");  
+    printf(" __  __                         __   _  _   ____  _             \n");
     printf("|  \\/  |_   _ _ __   ___ _ __  / /_ | || | |  _ \\| |_   _ ___ \n");
     printf("| |\\/| | | | | '_ \\ / _ \\ '_ \\| '_ \\| || |_| |_) | | | | / __|  \n");
     printf("| |  | | |_| | |_) |  __/ | | | (_) |__   _|  __/| | |_| \\__ \\  \n");
