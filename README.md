@@ -1,24 +1,43 @@
-===============================================================================
--------------------------------------------------------------------------------
+Mupen64Plus, now with Lua 5.3
+-----------------------------
+
+This is a fork of Mupen64Plus that adds Lua scripting support.
+Right now, it can't do much, but eventually it should be possible to implement
+things such as frontend UIs, advanced debugging/cheating/TAS tools, game
+enhancement scripts, etc with Lua.
+
+This is the Mupen64Plus-UI-Console program. It needs to be paired with the
+modified Mupen64Plus-Core library which actually implements Lua scripting.
+(The modifications to this program are only to ask the core to load a script.)
+You'll also need the rest of Mupen64Plus; so far I haven't forked the other
+modules since I haven't changed them, so the ones from
+https://github.com/mupen64plus will work just fine.
+
+Mind that I've only modified the Unix makefile. I have neither the experience
+nor interest to mess with the Windows makefiles at the moment, so it probably
+won't build on Windows until someone gets around to fixing those.
+
+
+Original README follows...
+
 Mupen64plus-ui-console README                                              v2.0
 -------------------------------------------------------------------------------
-===============================================================================
 
 The latest documentation for this plugin can be found at:
 
 https://code.google.com/p/mupen64plus/wiki/UIConsoleUsage
 
--------------------------------------------------------------------------------
 Console Options
 -------------------------------------------------------------------------------
 
 At startup, the mupen64plus program will look for a user configuration file
-called 'mupen64plus.cfg'.  If this file does not exist, it will be created and
+called `mupen64plus.cfg`.  If this file does not exist, it will be created and
 default settings will be written. If desired, an alternate config directory can
-be specified using the --configdir commandline option.
+be specified using the `--configdir` commandline option.
 
-Run 'mupen64plus --help' for a complete list of commandline options: 
+Run `mupen64plus --help` for a complete list of commandline options:
 
+```
  $ mupen64plus --help
 Usage: mupen64plus [parameter(s)] [romfile]
 
@@ -58,24 +77,24 @@ Parameters:
     'all'                 : enable all of the available cheat codes
     (codelist)            : a comma-separated list of cheat code numbers to enable,
                             with dashes to use code variables (ex 1-2 to use cheat 1 option 2)
+```
 
--------------------------------------------------------------------------------
 Cheats
 -------------------------------------------------------------------------------
 
 To list the available cheats in the rom:
 
-mupen64plus --cheats list "/path/to/my/rom.v64"
+`mupen64plus --cheats list "/path/to/my/rom.v64"`
 
 If there are cheats in the rom, you will get (in the output console):
 
+```
 UI-Console: 3 cheat code(s) found for ROM 'MY ROM'
    0: [Enable All Levels] (This is needed to be able to Play all Levels of the Game)
    1: [Enable All Weapons] (This is needed to be able to Play with all Weapons of the Game)
    2: etc...
+```
 
 All you have to do to use this cheats is:
 
-mupen64plus --cheats 0,1,2 "/path/to/my/rom.v64"
-
-
+`mupen64plus --cheats 0,1,2 "/path/to/my/rom.v64"`
